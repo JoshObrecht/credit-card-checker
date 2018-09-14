@@ -170,7 +170,7 @@ public class CreditCard
 						numTester.clear();
 					}
 				
-				if(creditNums.size()==100)
+				if(creditNums.size()==100000)
 					{
 						repeat=false;
 					}
