@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.*;
 import java.util.Scanner;
 
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
@@ -9,11 +10,11 @@ public class CreditCard
 		static long userNumber = 0;
 		public static void main(String[] args)
 			{
-				takeNum();
-				stripCreditCard();
-				doubleAlternates();
-				checkNumber();
-//				generateCreditNums();
+//				takeNum();
+//				stripCreditCard();
+//				doubleAlternates();
+//				checkNumber();
+				generateCreditNums();
 
 			}
 		public static void takeNum()
@@ -80,6 +81,15 @@ public class CreditCard
 		}
 		public static void generateCreditNums()
 		{
+		String fileName = "CreditCardNums.txt";
+			
+		try
+			{
+		FileWriter fileWriter = new FileWriter(fileName, true);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		
+		long startTime = System.nanoTime();
+		
 		ArrayList<String> creditNums = new ArrayList<String>();
 		ArrayList<Long> numTester = new ArrayList<Long>();
 		
@@ -143,6 +153,15 @@ public class CreditCard
 				
 				if(sum%10==0)
 					{
+						for(int i=0; i<creditNums.size(); i++)
+							{
+								if(cardNum.equals(creditNums.get(i)))
+								{
+								numTester.clear();
+								break;
+								}
+					
+							}
 						creditNums.add(cardNum);
 						numTester.clear();
 					}
@@ -157,14 +176,25 @@ public class CreditCard
 					}
 				counter+=1;
 			}
+		long endTime = System.nanoTime();
 		System.out.println("It took "+counter+" attempts to generate 100 valid credit card numbers.");
-//		for(String n: creditNums)
-//			{
-//				System.out.println(n);
-//			}
+		System.out.println("Took "+(endTime - startTime) + " ns."); 
+			
+		for(String n: creditNums)
+			{
+			bufferedWriter.write(n+"\n");
+			}
+		bufferedWriter.close();
 		
-
+			}
+		
+		catch(IOException ex)
+			{
+			ex.printStackTrace();
+			}
+		
 		}
+	
 		
 
 	}
