@@ -1,20 +1,21 @@
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
-
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 public class CreditCard
 	{
+		//branch testing
 		static ArrayList<Long> creditCard = new ArrayList<Long>();
 		static Scanner userInput = new Scanner(System.in);
 		static long userNumber = 0;
+		static int correctNums = 0;
 		public static void main(String[] args)
 			{
 //				takeNum();
 //				stripCreditCard();
 //				doubleAlternates();
 //				checkNumber();
-				generateCreditNums();
+//				generateCreditNums();
+				readNums();
 
 			}
 		public static void takeNum()
@@ -30,16 +31,16 @@ public class CreditCard
 				
 				if(userNumber==0)
 					{
-						if(creditCard.size()!=16)
-							{
-							System.out.println("That number was not 16 digits long.");
-							creditCard.clear();
-							takeNum();
-							}
-						else
-							{
+//						if(creditCard.size()!=16)
+//							{
+//							System.out.println("That number was not 16 digits long.");
+//							creditCard.clear();
+//							takeNum();
+//							}
+//						else
+//							{
 						repeat =false;
-							}
+//							}
 					}
 				else
 					{
@@ -69,14 +70,18 @@ public class CreditCard
 			for(int i=0; i<creditCard.size(); i++)
 				{
 					sum+=creditCard.get(i);
+
 				}
 			if(sum%10==0)
 				{
-					System.out.println("That is a potentially valid credit card number.");
+//					System.out.println("That is a potentially valid credit card number.");
+					correctNums+=1;
+					creditCard.clear();
 				}
 			else
 				{
-					System.out.println("That is not a potentially valid credit card number.");
+//					System.out.println("That is not a potentially valid credit card number.");
+					creditCard.clear();
 				}
 		}
 		public static void generateCreditNums()
@@ -170,7 +175,7 @@ public class CreditCard
 						numTester.clear();
 					}
 				
-				if(creditNums.size()==100000)
+				if(creditNums.size()==100)
 					{
 						repeat=false;
 					}
@@ -193,6 +198,34 @@ public class CreditCard
 			ex.printStackTrace();
 			}
 		
+		}
+		public static void readNums()
+		{
+	
+			
+			try
+				{
+					Scanner nums = new Scanner(new File(userInput.nextLine()));
+					while(nums.hasNextLine())
+						{
+					userNumber = Long.parseLong(nums.next());
+					stripCreditCard();
+					doubleAlternates();
+					checkNumber();
+						}
+					
+					System.out.println(correctNums+" of the numbers in that file are potentially valid.");
+					
+				
+				}
+			catch(FileNotFoundException ex)
+				{
+					ex.printStackTrace();
+				}
+			catch(IOException ex)
+				{
+					ex.printStackTrace();
+				}
 		}
 	
 		
